@@ -22,7 +22,7 @@
                             </el-menu-item>
                             <el-submenu v-else :key="menu2.id" >
                                 <span slot="title">{{menu2.name}}</span>
-                                <el-menu-item :index="menu3.id" v-for="     menu3 in menu2.children" :key="menu3.id" @click.native="selectHandle(menu3,$event)">{{menu3.name}}</el-menu-item>
+                                <el-menu-item :index="menu3.id" v-for="menu3 in menu2.children" :key="menu3.id" @click.native="selectHandle(menu3,$event)">{{menu3.name}}</el-menu-item>
                             </el-submenu>
                         </template>
                     </el-submenu>
@@ -30,32 +30,27 @@
             </div>
           <!-- </div> -->
         </el-aside>
-
-        <!-- <el-main> -->
-            <!-- 右边主体内容 -->
-              <el-main class="main">
-                  <el-tabs v-model="activeTabName" type="border-card"  @tab-remove="closeTab">
-                    <el-tab-pane
-                        v-for="item in tabList"
-                        :key="item.name"
-                        :label="item.label"
-                        :name="item.name"
-                        :closable="item.closable">
-
-                        <!-- <component :is="item.component"></component> -->
-
-                    </el-tab-pane>
-                </el-tabs>
-              </el-main>
-      <!-- </el-main> -->
+        <!-- 右边主体内容 -->
+        <el-main class="main">
+            <el-tabs  v-model="activeTabName" type="border-card" @tab-remove="closeTab">
+            <el-tab-pane
+                v-for="item in tabList"
+                :key="item.name"
+                :label="item.label"
+                :name="item.name"
+                :closable="item.closable">
+                <component :is="item.component" ></component>
+            </el-tab-pane>
+        </el-tabs>
+        </el-main>
     </el-container>
   </div>
 </template>
 <script>
+//   const home = resolve => require(['@/components/home'], resolve);
   import {mapState, mapMutations} from 'vuex'; // 引入状态管理
   export default {
-    components:{ //
-    },
+    name:'index',
     data() {
         return {
             isCollapse: false,
@@ -66,56 +61,56 @@
                     icon: 'el-icon-tickets',
                     name: '访销计划',
                     children: [
-                        { id: '1-1', name: '访销管理',path:'/home'  },
+                        { id: '1-1', name: '访销管理', path:'home'  },
+                        { id: '1-2', name: '访销计划', path:'pre'  },
                     ],
                 },
             ],
-          width: '200px',
-          label:'访销管理',
+            width: '200px',
         }
     }, 
     mounted(){
-    var that = this;
-    //  $('.main').click(function(){
-    //      that.isDisplay(true);
-    //  });
-    //  console.log(that);
+        var that = this;
+        $('.main').click(function(){
+            that.isDisplay(true);
+        });
     },
     computed: {
         activeTabName: {
             get() {
-                // return this.$store.state.navTabs.activeTabName;
+                return this.$store.state.navTabs.activeTabName;
             },
             set(value) {
-                // console.log(125,value);
-                // this.$store.commit('navTabs/setActiveTabName', value);
+                this.$store.commit('navTabs/setActiveTabName', value);
             }
         },
-        ...mapState('navTabs', ['tabList'])
+        ...mapState('navTabs', ['tabList']),
     },
     methods:{
-    // 展开方法
-    ...mapMutations('navTabs', ['closeTab', 'addTab']),
-    // 新增标签
-    selectHandle(tab) {
-        this.addTab({
-            label: tab.name,
-            name: tab.path,
-            src: tab.path
-        });
-    },
-    isDisplay(val){
-        if(val){
-            this.isCollapse = true;
-            this.width = '65px'
-        }else{
-            this.isCollapse = false;
-            this.width = '200px'
-        }
-    },
+        // 展开方法
+        ...mapMutations('navTabs', ['closeTab', 'addTab']),
+        // 新增标签
+        selectHandle(tab) {
+            this.addTab({
+                label: tab.name,
+                name: tab.path,
+                src: tab.path
+            });
+        },
+        // 是否显示结构树
+        isDisplay(val){
+            if(val){
+                this.isCollapse = true;
+                this.width = '65px'
+            }else{
+                this.isCollapse = false;
+                this.width = '200px'
+            }
+        },
     }
   }
 </script>
+
 <style lang="stylus" scoped>
 .page{
     height: 100%;

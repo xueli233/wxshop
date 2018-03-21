@@ -1,6 +1,6 @@
 <template>
-  <div id="page" class="page">
-      hahaha
+  <div id="pre" class="page">
+      papapapa
   </div>
 </template>
 <script>

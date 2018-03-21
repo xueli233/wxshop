@@ -1,11 +1,10 @@
-// 保存全局标签页
-const home = resolve => require(['@/components/index'], resolve);
+const home = resolve => require(['@/components/home'], resolve);
 
 const state = {
-    activeTabName: '主页',
+    activeTabName: 'home',
     tabList: [{
         label: '主页',
-        name: 'index',
+        name: 'home',
         disabled: false,
         closable: false,
         component: home
@@ -14,7 +13,7 @@ const state = {
 
 const mutations = {
     /**
-     * 设置当前活动页
+     * 设置活动页
      * @param {*} state 
      * @param {*} name 
      */
@@ -22,7 +21,7 @@ const mutations = {
         state.activeTabName = name;
     },
     /**
-     * 添加标签
+     * 新增标签页
      * @param {*} state 
      * @param {*} tab 
      */
@@ -40,7 +39,7 @@ const mutations = {
         state.activeTabName = tab.name;
     },
     /**
-     * 关闭标签页
+     * 删除标签页
      * @param {*} state 
      * @param {*} name 
      */
